@@ -14,6 +14,10 @@ StopTheNews is an app for macOS 10.14 Mojave that automatically handles Apple Ne
 
 1. Move `StopTheNews.app` to the Trash.
 
+## Known Issues
+
+- Some Apple News pages don't provide the original article URL. The articles are designed to be displayed inline on `apple.news`. In these cases, StopTheNews offers the option to open the article in News app.
+
 ## Building
 
 Building StopTheMadness from source requires Xcode 10.
