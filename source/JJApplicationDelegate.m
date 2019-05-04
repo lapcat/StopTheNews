@@ -29,9 +29,13 @@ NSString* JJApplicationName;
 		_shouldTerminateAutomatically = NO;
 		NSAlert* alert = [[NSAlert alloc] init];
 		[alert setMessageText:NSLocalizedString(@"Original Article Not Found", nil)];
-		NSString* informativeText = [NSString stringWithFormat:@"%@\n\n%@", [url absoluteString], message];
+		NSString* informativeText = [NSString stringWithFormat:@"%@\n\n%@\n\nOpen the URL in News app instead?", [url absoluteString], message];
 		[alert setInformativeText:informativeText];
-		(void)[alert runModal];
+		[alert addButtonWithTitle:NSLocalizedString(@"News app", nil)];
+		[alert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+		if ([alert runModal] == NSAlertFirstButtonReturn) {
+			[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:@"com.apple.news" options:NSWorkspaceLaunchAsync additionalEventParamDescriptor:nil launchIdentifiers:nil];
+		}
 		--_urlCount;
 	});
 }
