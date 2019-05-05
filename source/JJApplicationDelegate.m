@@ -97,7 +97,13 @@ NSString* JJApplicationName;
 							NSRange range = [html rangeOfString:@"redirectToUrlAfterTimeout(\""];
 							NSUInteger location = range.location;
 							if (location == NSNotFound) {
-								[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"Cannot find the function redirectToUrlAfterTimeout().", nil)];
+								range = [html rangeOfString:@"redirectToUrlAfterTimeout("];
+								location = range.location;
+								if (location == NSNotFound) {
+									[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"Cannot find the function redirectToUrlAfterTimeout().", nil)];
+								} else {
+									[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"This article appears to be written exclusively for Apple News. No original article is listed.", nil)];
+								}
 							} else {
 								NSUInteger length = range.length;
 								NSScanner* scanner = [NSScanner scannerWithString:html];
