@@ -7,8 +7,7 @@
 NSString* JJApplicationName;
 
 @implementation JJApplicationDelegate {
-	BOOL _didFinishLaunching;
-	BOOL _shouldTerminateAutomatically;
+	BOOL _didOpenURLs;
 	NSUInteger _urlCount;
 	NSWindow* _licenseWindow;
 	NSWindow* _mainWindow;
@@ -16,27 +15,24 @@ NSString* JJApplicationName;
 
 #pragma mark Private
 
--(void)dataTaskDidFinish {
+-(void)dataTaskDidFinishWithURL:(nonnull NSURL*)url message:(nullable NSString*)message {
 	dispatch_async(dispatch_get_main_queue(), ^{
-		--_urlCount;
-		if (_shouldTerminateAutomatically && _urlCount == 0)
-			[NSApp terminate:nil];
-	});
-}
-
--(void)dataTaskDidFinishWithURL:(nonnull NSURL*)url message:(nonnull NSString*)message {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		_shouldTerminateAutomatically = NO;
-		NSAlert* alert = [[NSAlert alloc] init];
-		[alert setMessageText:NSLocalizedString(@"Original Article Not Found", nil)];
-		NSString* informativeText = [NSString stringWithFormat:@"%@\n\n%@\n\nOpen the URL in News app instead?", [url absoluteString], message];
-		[alert setInformativeText:informativeText];
-		[alert addButtonWithTitle:NSLocalizedString(@"News app", nil)];
-		[alert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
-		if ([alert runModal] == NSAlertFirstButtonReturn) {
-			[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:@"com.apple.news" options:NSWorkspaceLaunchAsync additionalEventParamDescriptor:nil launchIdentifiers:nil];
+		if (message == nil) {
+			--_urlCount;
+			[[NSWorkspace sharedWorkspace] openURL:url];
+		} else {
+			NSAlert* alert = [[NSAlert alloc] init];
+			[alert setMessageText:NSLocalizedString(@"Original Article Not Found", nil)];
+			NSString* informativeText = [NSString stringWithFormat:@"%@\n\n%@\n\nOpen the URL in News app instead?", [url absoluteString], message];
+			[alert setInformativeText:informativeText];
+			[alert addButtonWithTitle:NSLocalizedString(@"News app", nil)];
+			[alert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+			NSModalResponse modalResponse = [alert runModal];
+			--_urlCount;
+			if (modalResponse == NSAlertFirstButtonReturn) {
+				[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:@"com.apple.news" options:NSWorkspaceLaunchAsync additionalEventParamDescriptor:nil launchIdentifiers:nil];
+			}
 		}
-		--_urlCount;
 	});
 }
 
@@ -52,14 +48,24 @@ NSString* JJApplicationName;
 }
 
 -(void)applicationDidFinishLaunching:(nonnull NSNotification*)notification {
-	_didFinishLaunching = YES;
-	if (!_shouldTerminateAutomatically)
+	if (!_didOpenURLs)
 		[self openMainWindow:nil];
 }
 
+-(void)applicationDidResignActive:(nonnull NSNotification*)notification {
+	if (_urlCount > 0)
+		return;
+	
+	NSArray<NSWindow*>* windows = [NSApp windows];
+	for (NSWindow* window in windows) {
+		if ([window isVisible])
+			return; // Don't terminate if there are visible windows
+	}
+	[NSApp terminate:nil];
+}
+
 -(void)application:(nonnull NSApplication*)application openURLs:(nonnull NSArray<NSURL*>*)urls {
-	if (!_didFinishLaunching)
-		_shouldTerminateAutomatically = YES;
+	_didOpenURLs = YES;
 	_urlCount += [urls count];
 	NSURLSession* session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
 	for (NSURL* url in urls) {
@@ -117,8 +123,7 @@ NSString* JJApplicationName;
 									if (originalURL == nil) {
 										[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"The original URL is improperly formatted.", nil)];
 									} else {
-										[[NSWorkspace sharedWorkspace] openURL:originalURL];
-										[self dataTaskDidFinish];
+										[self dataTaskDidFinishWithURL:originalURL message:nil];
 									}
 								}
 							}
