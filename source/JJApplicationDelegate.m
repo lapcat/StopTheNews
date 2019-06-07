@@ -48,8 +48,19 @@ NSString* JJApplicationName;
 }
 
 -(void)applicationDidFinishLaunching:(nonnull NSNotification*)notification {
-	if (!_didOpenURLs)
-		[self openMainWindow:nil];
+	if (_didOpenURLs)
+		return;
+	
+	CFStringRef bundleID = CFSTR("com.lapcatsoftware.StopTheNews");
+	OSStatus status;
+	status = LSSetDefaultHandlerForURLScheme(CFSTR("applenews"), bundleID);
+	if (status != noErr)
+		NSLog(@"LSSetDefaultHandlerForURLScheme applenews failed: %i", status);
+	status = LSSetDefaultHandlerForURLScheme(CFSTR("applenewss"), bundleID);
+	if (status != noErr)
+		NSLog(@"LSSetDefaultHandlerForURLScheme applenewss failed: %i", status);
+	
+	[self openMainWindow:nil];
 }
 
 -(void)applicationDidResignActive:(nonnull NSNotification*)notification {
