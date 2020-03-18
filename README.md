@@ -31,7 +31,7 @@ DEVELOPMENT_TEAM = [Your TeamID]
 
 [Jeff Johnson](https://lapcatsoftware.com/)
 
-To support the author, please consider buying the Safari extension StopTheMadness in the [Mac App Store](https://itunes.apple.com/app/stopthemadness/id1376402589?mt=12).
+To support the author, you can buy the Safari extension StopTheMadness in the [Mac App Store](https://apps.apple.com/app/stopthemadness/id1376402589?mt=12) or [PayPal.Me](https://www.paypal.me/JeffJohnsonWI).
 
 ## Copyright
 
