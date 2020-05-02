@@ -81,21 +81,16 @@ NSString* JJApplicationName;
 
 -(void)application:(nonnull NSApplication*)application openURLs:(nonnull NSArray<NSURL*>*)urls {
 	_didOpenURLs = YES;
-	NSUInteger count = [urls count];
-	if (count == 1) {
-		NSURL* firstURL = [urls firstObject];
-		NSString* scheme = [firstURL scheme];
-		if (scheme != nil) {
-			NSArray<NSString*>* schemes = @[@"itms-apps", @"itms-appss", @"macappstore", @"macappstores"];
-			if ([schemes containsObject:[scheme lowercaseString]]) {
-				[self openMacAppStoreURL:firstURL];
-				return;
-			}
-		}
-	}
 	_urlCount += [urls count];
 	NSURLSession* session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
+	NSArray<NSString*>* appStoreSchemes = @[@"itms-apps", @"itms-appss", @"macappstore", @"macappstores"];
 	for (NSURL* url in urls) {
+		NSString* scheme = [url scheme];
+		if (scheme != nil && [appStoreSchemes containsObject:[scheme lowercaseString]]) {
+			[self openMacAppStoreURL:url];
+			--_urlCount;
+			continue;
+		}
 		NSString* absoluteString = [url absoluteString];
 		if (absoluteString == nil) {
 			[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"The URL has no absolute string.", nil)];
