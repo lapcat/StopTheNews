@@ -7,4 +7,4 @@
 -(void)openWebSite:(nullable id)sender;
 @end
 
-extern NSString* JJApplicationName;
+extern NSString*_Null_unspecified JJApplicationName;

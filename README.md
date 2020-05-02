@@ -1,6 +1,8 @@
 # StopTheNews
 
-StopTheNews is an app for macOS 10.14 Mojave that automatically handles Apple News URLs instead of News app. If you open an Apple News URL in Safari, StopTheNews will then open the original article page in Safari instead of sending it to News app. StopTheNews also works with Safari Technology Preview, if that is your default web browser.
+StopTheNews is an app for macOS (10.14 Mojave or later) that automatically handles Apple News URLs instead of News app. If you allow Safari to open an Apple News URL in StopTheNews, the original article will then open in Safari instead of News app. StopTheNews also works with Safari Technology Preview, if that is your default web browser.
+
+StopTheNews now also handles Mac App Store URLs instead of App Store app. If you allow Safari to open a Mac App Store URL in StopTheNews, the app's page will then open in App Store. This lets you stop App Store from automatically opening.
 
 ## Installing
 
@@ -20,7 +22,7 @@ StopTheNews is an app for macOS 10.14 Mojave that automatically handles Apple Ne
 
 ## Building
 
-Building StopTheMadness from source requires Xcode 10.
+Building StopTheMadness from source requires Xcode 10 or later.
 
 Before building, you need to create a file named `DEVELOPMENT_TEAM.xcconfig` in the project folder (the same folder as `Shared.xcconfig`). This file is excluded from version control by the project's `.gitignore` file, and it's not referenced in the Xcode project either. The file specifies the build setting for your Development Team, which is needed by Xcode to code sign the app. The entire contents of the file should be of the following format:
 ```

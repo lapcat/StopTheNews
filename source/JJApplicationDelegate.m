@@ -36,6 +36,10 @@ NSString* JJApplicationName;
 	});
 }
 
+-(void)openMacAppStoreURL:(nonnull NSURL*)url {
+	[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:@"com.apple.AppStore" options:NSWorkspaceLaunchAsync additionalEventParamDescriptor:nil launchIdentifiers:nil];
+}
+
 #pragma mark NSApplicationDelegate
 
 -(void)applicationWillFinishLaunching:(nonnull NSNotification *)notification {
@@ -52,13 +56,13 @@ NSString* JJApplicationName;
 		return;
 	
 	CFStringRef bundleID = CFSTR("com.lapcatsoftware.StopTheNews");
+	NSArray<NSString*>* schemes = @[@"applenews", @"applenewss", @"itms-apps", @"itms-appss", @"macappstore", @"macappstores"];
 	OSStatus status;
-	status = LSSetDefaultHandlerForURLScheme(CFSTR("applenews"), bundleID);
-	if (status != noErr)
-		NSLog(@"LSSetDefaultHandlerForURLScheme applenews failed: %i", status);
-	status = LSSetDefaultHandlerForURLScheme(CFSTR("applenewss"), bundleID);
-	if (status != noErr)
-		NSLog(@"LSSetDefaultHandlerForURLScheme applenewss failed: %i", status);
+	for (NSString* scheme in schemes) {
+		status = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef _Nonnull)scheme, bundleID);
+		if (status != noErr)
+			NSLog(@"LSSetDefaultHandlerForURLScheme %@ failed: %i", scheme, status);
+	}
 	
 	[self openMainWindow:nil];
 }
@@ -77,6 +81,18 @@ NSString* JJApplicationName;
 
 -(void)application:(nonnull NSApplication*)application openURLs:(nonnull NSArray<NSURL*>*)urls {
 	_didOpenURLs = YES;
+	NSUInteger count = [urls count];
+	if (count == 1) {
+		NSURL* firstURL = [urls firstObject];
+		NSString* scheme = [firstURL scheme];
+		if (scheme != nil) {
+			NSArray<NSString*>* schemes = @[@"itms-apps", @"itms-appss", @"macappstore", @"macappstores"];
+			if ([schemes containsObject:[scheme lowercaseString]]) {
+				[self openMacAppStoreURL:firstURL];
+				return;
+			}
+		}
+	}
 	_urlCount += [urls count];
 	NSURLSession* session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
 	for (NSURL* url in urls) {
@@ -172,7 +188,7 @@ NSString* JJApplicationName;
 -(void)openMacAppStore:(id)sender {
 	NSURL* url = [NSURL URLWithString:@"macappstore://itunes.apple.com/app/stopthemadness/id1376402589"];
 	if (url != nil)
-		[[NSWorkspace sharedWorkspace] openURL:url];
+		[self openMacAppStoreURL:url];
 	else
 		NSLog(@"MAS URL nil!");
 }
