@@ -59,8 +59,6 @@
 	<string>© 2019 Jeff Johnson. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>NSRequiresAquaSystemAppearance</key>
-	<false/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
 </dict>
