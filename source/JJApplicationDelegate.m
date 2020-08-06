@@ -18,7 +18,7 @@ NSString* JJApplicationName;
 -(void)dataTaskDidFinishWithURL:(nonnull NSURL*)url message:(nullable NSString*)message {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (message == nil) {
-			--_urlCount;
+			[self decrementURLCount];
 			[[NSWorkspace sharedWorkspace] openURL:url];
 		} else {
 			NSAlert* alert = [[NSAlert alloc] init];
@@ -28,12 +28,29 @@ NSString* JJApplicationName;
 			[alert addButtonWithTitle:NSLocalizedString(@"News app", nil)];
 			[alert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
 			NSModalResponse modalResponse = [alert runModal];
-			--_urlCount;
+			[self decrementURLCount];
 			if (modalResponse == NSAlertFirstButtonReturn) {
 				[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:@"com.apple.news" options:NSWorkspaceLaunchAsync additionalEventParamDescriptor:nil launchIdentifiers:nil];
 			}
 		}
 	});
+}
+
+-(void)terminateIfNecessary {
+	NSArray<NSWindow*>* windows = [NSApp windows];
+	for (NSWindow* window in windows) {
+		if ([window isVisible])
+			return; // Don't terminate if there are visible windows
+	}
+	[NSApp terminate:nil];
+}
+
+-(void)decrementURLCount {
+	--_urlCount;
+	if (_urlCount > 0)
+		return;
+	
+	[self performSelector:@selector(terminateIfNecessary) withObject:nil afterDelay:2.0];
 }
 
 -(void)openMacAppStoreURL:(nonnull NSURL*)url {
@@ -71,12 +88,7 @@ NSString* JJApplicationName;
 	if (_urlCount > 0)
 		return;
 	
-	NSArray<NSWindow*>* windows = [NSApp windows];
-	for (NSWindow* window in windows) {
-		if ([window isVisible])
-			return; // Don't terminate if there are visible windows
-	}
-	[NSApp terminate:nil];
+	[self terminateIfNecessary];
 }
 
 -(void)application:(nonnull NSApplication*)application openURLs:(nonnull NSArray<NSURL*>*)urls {
@@ -88,7 +100,7 @@ NSString* JJApplicationName;
 		NSString* scheme = [url scheme];
 		if (scheme != nil && [appStoreSchemes containsObject:[scheme lowercaseString]]) {
 			[self openMacAppStoreURL:url];
-			--_urlCount;
+			[self decrementURLCount];
 			continue;
 		}
 		NSString* absoluteString = [url absoluteString];
