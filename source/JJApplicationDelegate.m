@@ -72,7 +72,7 @@ NSString* JJApplicationName;
 	if (_didOpenURLs)
 		return;
 	
-	CFStringRef bundleID = CFSTR("com.lapcatsoftware.StopTheNews");
+	CFStringRef bundleID = CFSTR("com.apple.news");
 	NSArray<NSString*>* schemes = @[@"applenews", @"applenewss", @"itms-apps", @"itms-appss", @"macappstore", @"macappstores"];
 	OSStatus status;
 	for (NSString* scheme in schemes) {
