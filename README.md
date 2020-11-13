@@ -6,7 +6,7 @@ StopTheNews now also handles Mac App Store URLs instead of App Store app. If you
 
 ## Installing
 
-1. Download the [latest release](https://github.com/lapcat/StopTheNews/releases/latest).
+1. On macOS Big Sur, download the [latest release](https://github.com/lapcat/StopTheNews/releases/latest). On macOS Catalina or Mojave, download [version 2.2](https://github.com/lapcat/StopTheNews/releases/tag/v2.2).
 2. Unzip the downloaded `.zip` file.
 3. Move `StopTheNews.app` to your Applications folder.
 4. Open `StopTheNews.app`.
