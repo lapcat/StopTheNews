@@ -35,23 +35,6 @@
 			<key>LSIsAppleDefaultForScheme</key>
 			<true/>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleURLName</key>
-			<string>App Store URL</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>itms-apps</string>
-				<string>itms-appss</string>
-				<string>macappstore</string>
-				<string>macappstores</string>
-			</array>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
-			<key>LSIsAppleDefaultForScheme</key>
-			<true/>
-		</dict>
 	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>$(STOPTHENEWS_SHORT_VERSION)</string>

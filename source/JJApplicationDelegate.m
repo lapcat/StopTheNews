@@ -72,15 +72,6 @@ NSString* JJApplicationName;
 	if (_didOpenURLs)
 		return;
 	
-	CFStringRef bundleID = CFSTR("com.apple.news");
-	NSArray<NSString*>* schemes = @[@"applenews", @"applenewss", @"itms-apps", @"itms-appss", @"macappstore", @"macappstores"];
-	OSStatus status;
-	for (NSString* scheme in schemes) {
-		status = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef _Nonnull)scheme, bundleID);
-		if (status != noErr)
-			NSLog(@"LSSetDefaultHandlerForURLScheme %@ failed: %i", scheme, status);
-	}
-	
 	[self openMainWindow:nil];
 }
 
@@ -95,14 +86,7 @@ NSString* JJApplicationName;
 	_didOpenURLs = YES;
 	_urlCount += [urls count];
 	NSURLSession* session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
-	NSArray<NSString*>* appStoreSchemes = @[@"itms-apps", @"itms-appss", @"macappstore", @"macappstores"];
 	for (NSURL* url in urls) {
-		NSString* scheme = [url scheme];
-		if (scheme != nil && [appStoreSchemes containsObject:[scheme lowercaseString]]) {
-			[self openMacAppStoreURL:url];
-			[self decrementURLCount];
-			continue;
-		}
 		NSString* absoluteString = [url absoluteString];
 		if (absoluteString == nil) {
 			[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"The URL has no absolute string.", nil)];

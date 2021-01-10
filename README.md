@@ -2,7 +2,7 @@
 
 StopTheNews is an app for macOS (10.14 Mojave or later) that automatically handles Apple News URLs instead of News app. If you allow Safari to open an Apple News URL in StopTheNews, the original article will then open in Safari instead of News app. StopTheNews also works with Safari Technology Preview, if that is your default web browser.
 
-StopTheNews now also handles Mac App Store URLs instead of App Store app. If you allow Safari to open a Mac App Store URL in StopTheNews, the app's page will then open in App Store. This lets you stop App Store from automatically opening.
+StopTheNews version 3.0 and earlier also handled Mac App Store URLs instead of App Store app. On macOS 11 Big Sur and later, this is now handled by a separate app, [Stop The Mac App Store](https://github.com/lapcat/StopTheMacAppStore).
 
 ## Installing
 
