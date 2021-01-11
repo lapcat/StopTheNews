@@ -22,7 +22,7 @@ StopTheNews version 3.0 and earlier also handled Mac App Store URLs instead of A
 
 ## Building
 
-Building StopTheMadness from source requires Xcode 10 or later.
+Building StopTheNews from source requires Xcode 10 or later.
 
 Before building, you need to create a file named `DEVELOPMENT_TEAM.xcconfig` in the project folder (the same folder as `Shared.xcconfig`). This file is excluded from version control by the project's `.gitignore` file, and it's not referenced in the Xcode project either. The file specifies the build setting for your Development Team, which is needed by Xcode to code sign the app. The entire contents of the file should be of the following format:
 ```
