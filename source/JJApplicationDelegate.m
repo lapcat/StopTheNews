@@ -72,6 +72,20 @@ NSString* JJApplicationName;
 	if (_didOpenURLs)
 		return;
 	
+	NSString* defaultHandler = CFBridgingRelease(LSCopyDefaultHandlerForURLScheme(CFSTR("macappstore"))); // LSCopyDefaultHandlerForURLScheme is deprecated but so what.
+	if (defaultHandler != nil && [defaultHandler caseInsensitiveCompare:@"com.apple.news"] == NSOrderedSame) {
+		// StopTheNews 3.0 set itself as the default Mac App Store link handler.
+		// This is bad when StopTheNews is uninstalled, because then Apple News becomes the default Mac App Store link handler, so set it back to App Store app.
+		CFStringRef bundleID = CFSTR("com.apple.AppStore");
+		NSArray<NSString*>* schemes = @[@"macappstore", @"macappstores"];
+		OSStatus status;
+		for (NSString* scheme in schemes) {
+			status = LSSetDefaultHandlerForURLScheme((__bridge CFStringRef _Nonnull)scheme, bundleID);
+			if (status != noErr)
+				NSLog(@"LSSetDefaultHandlerForURLScheme %@ failed: %i", scheme, status);
+		}
+	}
+	
 	[self openMainWindow:nil];
 }
 
