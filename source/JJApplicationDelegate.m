@@ -57,6 +57,42 @@ NSString* JJApplicationName;
 	[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:@"com.apple.AppStore" options:NSWorkspaceLaunchAsync additionalEventParamDescriptor:nil launchIdentifiers:nil];
 }
 
+#pragma mark <UNUserNotificationCenterDelegate>
+
+-(void)userNotificationCenter:(nonnull UNUserNotificationCenter*)notificationCenter didReceiveNotificationResponse:(nonnull UNNotificationResponse*)response withCompletionHandler:(nonnull void(^)(void))completionHandler {
+	_didOpenURLs = YES;
+	NSString* actionIdentifier = [response actionIdentifier];
+	if (![actionIdentifier isEqualToString:UNNotificationDismissActionIdentifier]) {
+		UNNotification* notification = [response notification];
+		UNNotificationRequest* request = [notification request];
+		UNNotificationContent* content = [request content];
+		NSDictionary* userInfo = [content userInfo];
+		NSDictionary* news = userInfo[@"news"];
+		if (news != nil && [news isKindOfClass:[NSDictionary class]]) {
+			NSString* cu = news[@"cu"];
+			if (cu != nil && [cu isKindOfClass:[NSString class]] && [cu hasPrefix:@"http"]) {
+				NSURL* url = [NSURL URLWithString:cu];
+				if (url != nil) {
+					[[NSWorkspace sharedWorkspace] openURL:url];
+					completionHandler();
+					return;
+				}
+			}
+			NSString* aid = news[@"aid"]; // article id
+			if (aid != nil && [aid isKindOfClass:[NSString class]]) {
+				NSURL* newsURL = [NSURL URLWithString:[@"applenewss:/" stringByAppendingString:aid]];
+				if (newsURL) {
+					[self application:NSApp openURLs:@[newsURL]];
+					completionHandler();
+					return;
+				}
+			}
+		}
+	}
+	completionHandler();
+	[self terminateIfNecessary];
+}
+
 #pragma mark NSApplicationDelegate
 
 -(void)applicationWillFinishLaunching:(nonnull NSNotification *)notification {
@@ -66,6 +102,12 @@ NSString* JJApplicationName;
 		JJApplicationName = @"StopTheNews";
 	}
 	[JJMainMenu populateMainMenu];
+	
+	[[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+}
+
+-(void)applicationWillTerminate:(nonnull NSNotification*)notification {
+	[[UNUserNotificationCenter currentNotificationCenter] setDelegate:nil];
 }
 
 -(void)applicationDidFinishLaunching:(nonnull NSNotification*)notification {

@@ -1,6 +1,7 @@
 @import Cocoa;
+@import UserNotifications;
 
-@interface JJApplicationDelegate:NSObject<NSApplicationDelegate>
+@interface JJApplicationDelegate:NSObject<NSApplicationDelegate, UNUserNotificationCenterDelegate>
 -(void)openLicense:(nullable id)sender;
 -(void)openMacAppStore:(nullable id)sender;
 -(void)openMainWindow:(nullable id)sender;
