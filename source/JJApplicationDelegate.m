@@ -30,7 +30,8 @@ NSString* JJApplicationName;
 			NSModalResponse modalResponse = [alert runModal];
 			[self decrementURLCount];
 			if (modalResponse == NSAlertFirstButtonReturn) {
-				[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:@"com.apple.news" options:NSWorkspaceLaunchAsync additionalEventParamDescriptor:nil launchIdentifiers:nil];
+				NSURL* newsAppURL = [NSURL fileURLWithPath:@"/System/Applications/News.app" isDirectory:YES];
+				[[NSWorkspace sharedWorkspace] openURLs:@[url] withApplicationAtURL:newsAppURL options:NSWorkspaceLaunchAsync configuration:@{} error:NULL];
 			}
 		}
 	});
