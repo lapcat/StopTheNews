@@ -11,28 +11,62 @@ NSString* JJApplicationName;
 	NSUInteger _urlCount;
 	NSWindow* _licenseWindow;
 	NSWindow* _mainWindow;
+	NSMutableArray<NSTask*>* _tasks;
 }
 
 #pragma mark Private
 
+-(void)openNewsWithURLString:(nonnull NSString*)absoluteString {
+	NSString* newsOpener = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"NewsOpener"];
+	if (newsOpener == nil) {
+		NSLog(@"Missing NewsOpener executable!");
+		return;
+	}
+	
+	NSTask* task = [[NSTask alloc] init];
+	[task setLaunchPath:newsOpener];
+	[task setArguments:@[absoluteString]];
+	[task setStandardInput:[NSPipe pipe]];
+	
+	@try {
+		[task launch];
+	} @catch (NSException* exception) {
+		NSLog(@"NewsOpener exception: %@", [exception reason]);
+		task = nil;
+	}
+	if (task != nil) {
+		if (![task isRunning]) {
+			NSLog(@"NewsOpener terminationStatus: %i", [task terminationStatus]);
+		} else {
+			if (_tasks == nil)
+				_tasks = [[NSMutableArray alloc] init];
+			[_tasks addObject:task];
+		}
+	}
+}
+
 -(void)dataTaskDidFinishWithURL:(nonnull NSURL*)url message:(nullable NSString*)message {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (message == nil) {
-			[self decrementURLCount];
+			--_urlCount;
+			if (_urlCount == 0)
+				[self performSelector:@selector(terminateIfNecessary) withObject:nil afterDelay:2.0];
 			[[NSWorkspace sharedWorkspace] openURL:url];
 		} else {
+			NSString* absoluteString = [url absoluteString];
 			NSAlert* alert = [[NSAlert alloc] init];
 			[alert setMessageText:NSLocalizedString(@"Original Article Not Found", nil)];
-			NSString* informativeText = [NSString stringWithFormat:@"%@\n\n%@\n\nOpen the URL in News app instead?", [url absoluteString], message];
+			NSString* informativeText = [NSString stringWithFormat:@"%@\n\n%@\n\nOpen the URL in News app instead?", absoluteString, message];
 			[alert setInformativeText:informativeText];
 			[alert addButtonWithTitle:NSLocalizedString(@"News app", nil)];
 			[alert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
 			NSModalResponse modalResponse = [alert runModal];
-			[self decrementURLCount];
 			if (modalResponse == NSAlertFirstButtonReturn) {
-				NSURL* newsAppURL = [NSURL fileURLWithPath:@"/System/Applications/News.app" isDirectory:YES];
-				[[NSWorkspace sharedWorkspace] openURLs:@[url] withApplicationAtURL:newsAppURL options:NSWorkspaceLaunchAsync configuration:@{} error:NULL];
+				[self openNewsWithURLString:absoluteString];
 			}
+			--_urlCount;
+			if (_urlCount == 0)
+				[self terminateIfNecessary];
 		}
 	});
 }
@@ -44,14 +78,6 @@ NSString* JJApplicationName;
 			return; // Don't terminate if there are visible windows
 	}
 	[NSApp terminate:nil];
-}
-
--(void)decrementURLCount {
-	--_urlCount;
-	if (_urlCount > 0)
-		return;
-	
-	[self performSelector:@selector(terminateIfNecessary) withObject:nil afterDelay:2.0];
 }
 
 -(void)openMacAppStoreURL:(nonnull NSURL*)url {

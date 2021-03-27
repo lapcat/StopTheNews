@@ -26,7 +26,6 @@ INFOPLIST_FILE = nonsource/Info.plist
 MACH_O_TYPE = mh_execute
 MACOSX_DEPLOYMENT_TARGET = 10.16
 PRODUCT_BUNDLE_IDENTIFIER = com.apple.news
-PRODUCT_NAME = StopTheNews
 SDKROOT = macosx
 WRAPPER_EXTENSION = app
 

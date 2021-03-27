@@ -7,16 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5214863C260ECCC8005210E2 /* NewsOpener.c in Sources */ = {isa = PBXBuildFile; fileRef = 5214863B260ECCC8005210E2 /* NewsOpener.c */; };
 		522DB9C4227CCB540013DFF5 /* JJMainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 522DB9C3227CCB540013DFF5 /* JJMainMenu.m */; };
 		5232475D227CB982004010F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52324756227CB982004010F5 /* Assets.xcassets */; };
 		5232475F227CB982004010F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5232475B227CB982004010F5 /* main.m */; };
 		52324760227CB982004010F5 /* JJApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5232475C227CB982004010F5 /* JJApplicationDelegate.m */; };
 		52699C04227D2878006F536D /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 52699C03227D2878006F536D /* LICENSE.txt */; };
+		527FDD52260EB4FF00B1C9FD /* NewsOpener in CopyFiles */ = {isa = PBXBuildFile; fileRef = 527FDD47260EB10200B1C9FD /* NewsOpener */; };
 		52989F99227DD2F2006A4E38 /* JJMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 52989F98227DD2F2006A4E38 /* JJMainWindow.m */; };
 		52CECB54227D26DD00E69FB4 /* JJLicenseWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CECB53227D26DD00E69FB4 /* JJLicenseWindow.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		527FDD4F260EB4E200B1C9FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52E05A9B227CB87C008791E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 527FDD46260EB10200B1C9FD;
+			remoteInfo = NewsOpener;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		527FDD51260EB4EB00B1C9FD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				527FDD52260EB4FF00B1C9FD /* NewsOpener in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		5214863B260ECCC8005210E2 /* NewsOpener.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NewsOpener.c; sourceTree = "<group>"; };
 		522DB9C2227CCB540013DFF5 /* JJMainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJMainMenu.h; sourceTree = "<group>"; };
 		522DB9C3227CCB540013DFF5 /* JJMainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJMainMenu.m; sourceTree = "<group>"; };
 		52324756227CB982004010F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -30,6 +56,7 @@
 		52324763227CBAE9004010F5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		52545808227DE38C00B9863A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		52699C03227D2878006F536D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		527FDD47260EB10200B1C9FD /* NewsOpener */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = NewsOpener; sourceTree = BUILT_PRODUCTS_DIR; };
 		52989F97227DD2F2006A4E38 /* JJMainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJMainWindow.h; sourceTree = "<group>"; };
 		52989F98227DD2F2006A4E38 /* JJMainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJMainWindow.m; sourceTree = "<group>"; };
 		52CECB52227D26DD00E69FB4 /* JJLicenseWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJLicenseWindow.h; sourceTree = "<group>"; };
@@ -51,6 +78,7 @@
 		52324759227CB982004010F5 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				5214863B260ECCC8005210E2 /* NewsOpener.c */,
 				5232475A227CB982004010F5 /* JJApplicationDelegate.h */,
 				5232475C227CB982004010F5 /* JJApplicationDelegate.m */,
 				52CECB52227D26DD00E69FB4 /* JJLicenseWindow.h */,
@@ -82,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				52E05AA3227CB87C008791E2 /* StopTheNews.app */,
+				527FDD47260EB10200B1C9FD /* NewsOpener */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,16 +118,33 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		527FDD46260EB10200B1C9FD /* NewsOpener */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 527FDD4B260EB10200B1C9FD /* Build configuration list for PBXNativeTarget "NewsOpener" */;
+			buildPhases = (
+				527FDD43260EB10200B1C9FD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NewsOpener;
+			productName = NewsOpener;
+			productReference = 527FDD47260EB10200B1C9FD /* NewsOpener */;
+			productType = "com.apple.product-type.tool";
+		};
 		52E05AA2227CB87C008791E2 /* StopTheNews */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52E05AB4227CB87D008791E2 /* Build configuration list for PBXNativeTarget "StopTheNews" */;
 			buildPhases = (
 				52E05A9F227CB87C008791E2 /* Sources */,
 				52E05AA1227CB87C008791E2 /* Resources */,
+				527FDD51260EB4EB00B1C9FD /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				527FDD50260EB4E200B1C9FD /* PBXTargetDependency */,
 			);
 			name = StopTheNews;
 			productName = StopTheNews;
@@ -114,6 +160,9 @@
 				LastUpgradeCheck = 9999;
 				ORGANIZATIONNAME = "Jeff Johnson";
 				TargetAttributes = {
+					527FDD46260EB10200B1C9FD = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 					52E05AA2227CB87C008791E2 = {
 						CreatedOnToolsVersion = 10.1;
 					};
@@ -133,6 +182,7 @@
 			projectRoot = "";
 			targets = (
 				52E05AA2227CB87C008791E2 /* StopTheNews */,
+				527FDD46260EB10200B1C9FD /* NewsOpener */,
 			);
 		};
 /* End PBXProject section */
@@ -150,6 +200,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		527FDD43260EB10200B1C9FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5214863C260ECCC8005210E2 /* NewsOpener.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52E05A9F227CB87C008791E2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -164,7 +222,31 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		527FDD50260EB4E200B1C9FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 527FDD46260EB10200B1C9FD /* NewsOpener */;
+			targetProxy = 527FDD4F260EB4E200B1C9FD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		527FDD4C260EB10200B1C9FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 52324763227CBAE9004010F5 /* Debug.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		527FDD4D260EB10200B1C9FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 52324761227CBAE9004010F5 /* Release.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		52E05AB2227CB87D008791E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 52324762227CBAE9004010F5 /* Shared.xcconfig */;
@@ -183,6 +265,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 52324763227CBAE9004010F5 /* Debug.xcconfig */;
 			buildSettings = {
+				PRODUCT_NAME = StopTheNews;
 			};
 			name = Debug;
 		};
@@ -190,12 +273,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 52324761227CBAE9004010F5 /* Release.xcconfig */;
 			buildSettings = {
+				PRODUCT_NAME = StopTheNews;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		527FDD4B260EB10200B1C9FD /* Build configuration list for PBXNativeTarget "NewsOpener" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527FDD4C260EB10200B1C9FD /* Debug */,
+				527FDD4D260EB10200B1C9FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		52E05A9E227CB87C008791E2 /* Build configuration list for PBXProject "StopTheNews" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
