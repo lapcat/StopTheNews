@@ -180,16 +180,17 @@ NSString* JJApplicationName;
 		if (absoluteString == nil) {
 			[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"The URL has no absolute string.", nil)];
 		} else {
-			NSString* oldPrefix = nil;
+			NSString* newString;
 			if ([absoluteString hasPrefix:@"applenews://"]) {
-				oldPrefix = @"applenews://";
+				newString = [absoluteString stringByReplacingCharactersInRange:NSMakeRange(0, [@"applenews://" length]) withString:@"https://apple.news"];
 			} else if ([absoluteString hasPrefix:@"applenewss:"]) {
-				oldPrefix = @"applenewss:";
+				newString = [absoluteString stringByReplacingCharactersInRange:NSMakeRange(0, [@"applenewss:" length]) withString:@"https://apple.news"];
+			} else if ([absoluteString hasPrefix:@"https://apple.news/"]) {
+				newString = absoluteString;
 			} else {
-				[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"The URL has an unexpected scheme.", nil)];
+				[self dataTaskDidFinishWithURL:url message:nil];
 				continue;
 			}
-			NSString* newString = [absoluteString stringByReplacingCharactersInRange:NSMakeRange(0, [oldPrefix length]) withString:@"https://apple.news"];
 			NSURL* newURL = [NSURL URLWithString:newString];
 			if (newURL == nil) {
 				[self dataTaskDidFinishWithURL:url message:NSLocalizedString(@"Cannot generate an Apple News URL.", nil)];
