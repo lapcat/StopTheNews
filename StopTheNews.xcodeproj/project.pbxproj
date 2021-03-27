@@ -236,6 +236,7 @@
 			baseConfigurationReference = 52324763227CBAE9004010F5 /* Debug.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -244,6 +245,7 @@
 			baseConfigurationReference = 52324761227CBAE9004010F5 /* Release.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
